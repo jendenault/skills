@@ -3,187 +3,215 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Jen's Claude Skills</title>
-<meta name="description" content="A free Claude connector I built. It learns how I work from my tools, then runs my daily work: morning briefs, meeting prep, follow-ups, and weekly reviews. 2-minute install." />
-<meta property="og:title" content="Jen's Claude Skills" />
-<meta property="og:description" content="A free Claude connector. Learns how you work, then runs your daily work: briefs, prep, follow-ups, reviews. 2-minute install." />
+<title>Mission Control · Jen's Claude Skills</title>
+<meta name="description" content="A free Claude connector. A set of ready-to-run skills that handle the busywork around your meetings: morning briefs, call prep, follow-ups, and weekly reviews. 2-minute install." />
+<meta property="og:title" content="Mission Control · Jen's Claude Skills" />
+<meta property="og:description" content="A free Claude connector. Ready-to-run skills for your meetings: briefs, prep, follow-ups, reviews. 2-minute install." />
 <meta property="og:type" content="website" />
 <style>
   :root{
-    --bg:#fbfaf8;
-    --ink:#1c1a17;
-    --muted:#6b655c;
-    --line:#e7e2d9;
+    /* Fathom palette */
+    --cerulean:#00BEFF;
+    --violet:#9600FF;
+    --dolly:#FFF58C;
+    --space:#0a0e1f;          /* deep space navy */
+    --space-2:#141a36;
+    --ink:#101322;
+    --muted:#5d6275;
+    --line:#e7e7ef;
+    --bg:#faf7f7;             /* soft peach tint */
     --card:#ffffff;
-    --accent:#b8431f;        /* warm terracotta */
-    --accent-soft:#fcefe9;
-    --accent-ink:#8f3315;
-    --radius:16px;
-    --maxw:720px;
-    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
-    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --accent-ink:#0076a8;     /* readable cerulean for text/links */
+    --accent-soft:#e7f8ff;
+    --violet-soft:#f3e9ff;
+    --radius:18px;
+    --maxw:760px;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
-  body{
-    margin:0; background:var(--bg); color:var(--ink);
-    font-family:var(--font); font-size:18px; line-height:1.65;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 22px;}
-  a{color:var(--accent-ink); text-decoration:none; border-bottom:1px solid rgba(143,51,21,.25);}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);
+    font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px;}
+  a{color:var(--accent-ink);text-decoration:none;border-bottom:1px solid rgba(0,118,168,.28);}
   a:hover{border-bottom-color:var(--accent-ink);}
-  h1,h2,h3{line-height:1.2; letter-spacing:-.01em;}
-  h1{font-size:clamp(34px,7vw,52px); margin:.1em 0 .25em; font-weight:760;}
-  h2{font-size:clamp(24px,4.5vw,32px); margin:0 0 .15em; font-weight:720;}
-  h3{font-size:20px; margin:0 0 .2em; font-weight:680;}
+  h1,h2,h3{line-height:1.15;letter-spacing:-.015em;}
+  h2{font-size:clamp(25px,4.6vw,34px);margin:0 0 .15em;font-weight:740;}
+  h3{font-size:20px;margin:0 0 .2em;font-weight:680;}
   p{margin:.5em 0 1em;}
   .muted{color:var(--muted);}
 
-  /* hero */
-  header.hero{padding:64px 0 18px;}
-  .eyebrow{display:inline-block; font-size:13px; font-weight:650; letter-spacing:.08em;
-    text-transform:uppercase; color:var(--accent-ink); background:var(--accent-soft);
-    padding:6px 12px; border-radius:999px; margin-bottom:18px;}
-  .lede{font-size:clamp(19px,2.6vw,22px); color:#3a352e; max-width:38ch;}
-  .cta{display:inline-block; background:var(--accent); color:#fff; font-weight:650;
-    padding:14px 26px; border-radius:12px; border:none; margin:14px 0 12px; font-size:17px;}
-  .cta:hover{background:var(--accent-ink);}
-  .meta-line{font-size:15px; color:var(--muted); margin-top:6px;}
-  .meta-line b{color:var(--ink); font-weight:620;}
+  /* ---------- HERO (space band) ---------- */
+  .hero{
+    background:
+      radial-gradient(1200px 380px at 78% -8%, rgba(0,190,255,.32), transparent 60%),
+      radial-gradient(900px 420px at 8% 10%, rgba(150,0,255,.34), transparent 58%),
+      linear-gradient(160deg,var(--space) 0%, var(--space-2) 100%);
+    color:#fff;position:relative;overflow:hidden;
+  }
+  /* starfield */
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.7;
+    background-image:
+      radial-gradient(1.4px 1.4px at 20% 30%,#fff,transparent),
+      radial-gradient(1.2px 1.2px at 70% 22%,#fff,transparent),
+      radial-gradient(1.6px 1.6px at 40% 60%,#cfeaff,transparent),
+      radial-gradient(1.1px 1.1px at 85% 55%,#fff,transparent),
+      radial-gradient(1.3px 1.3px at 55% 80%,#fff,transparent),
+      radial-gradient(1.1px 1.1px at 12% 75%,#e7d6ff,transparent);}
+  .hero .wrap{position:relative;z-index:1;padding:72px 22px 78px;}
+  .eyebrow{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;color:#031018;background:var(--cerulean);
+    padding:6px 13px;border-radius:999px;margin-bottom:20px;}
+  h1.hero-title{font-size:clamp(38px,7.4vw,60px);margin:.05em 0 .3em;font-weight:800;
+    background:linear-gradient(90deg,#ffffff 0%,#bfe9ff 60%,#e4ccff 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;}
+  .lede{font-size:clamp(18px,2.5vw,21px);color:#d7dbf0;max-width:46ch;margin:0 0 8px;}
+  .lede b{color:#fff;font-weight:640;}
+  .cta{display:inline-block;background:var(--cerulean);color:#03121c;font-weight:720;
+    padding:15px 30px;border-radius:12px;border:none;margin:22px 0 14px;font-size:17px;
+    box-shadow:0 8px 30px rgba(0,190,255,.35);}
+  .cta:hover{background:#36cbff;}
+  .meta-line{font-size:14.5px;color:#aab0cc;}
+  .meta-line b{color:#fff;font-weight:620;}
 
-  section{padding:40px 0; border-top:1px solid var(--line);}
-  .section-intro{max-width:54ch;}
+  /* ---------- sections ---------- */
+  section{padding:46px 0;border-top:1px solid var(--line);}
+  .section-intro{max-width:56ch;}
 
-  /* trigger phrase cards */
-  .phrases{display:grid; gap:14px; margin-top:24px;}
-  .phrase{background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
-    padding:18px 20px;}
-  .phrase .say{font-family:var(--mono); font-size:15.5px; background:var(--accent-soft);
-    color:var(--accent-ink); display:inline-block; padding:7px 12px; border-radius:8px;
-    margin-bottom:8px; font-weight:600;}
-  .phrase p{margin:0; color:var(--muted); font-size:16px;}
+  /* skill cards (expanded) */
+  .skills{display:grid;gap:16px;margin-top:26px;}
+  .skill{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px 22px;box-shadow:0 1px 0 rgba(16,19,34,.02);}
+  .skill .say{font-family:var(--mono);font-size:15px;background:var(--space);color:#bfe9ff;
+    display:inline-block;padding:8px 13px;border-radius:9px;margin-bottom:10px;font-weight:600;
+    border:1px solid rgba(0,190,255,.35);}
+  .skill h3{margin:2px 0 6px;}
+  .skill p{margin:0;color:#3b3f52;font-size:16.5px;}
 
   /* steps */
-  ol.steps{counter-reset:s; list-style:none; padding:0; margin:22px 0 0;}
-  ol.steps>li{position:relative; padding:0 0 18px 46px; margin:0;}
-  ol.steps>li::before{counter-increment:s; content:counter(s);
-    position:absolute; left:0; top:-2px; width:30px; height:30px; border-radius:50%;
-    background:var(--accent-soft); color:var(--accent-ink); font-weight:700; font-size:15px;
-    display:flex; align-items:center; justify-content:center;}
-  ol.steps>li:not(:last-child)::after{content:""; position:absolute; left:14px; top:30px;
-    bottom:6px; width:2px; background:var(--line);}
+  ol.steps{counter-reset:s;list-style:none;padding:0;margin:24px 0 0;}
+  ol.steps>li{position:relative;padding:0 0 20px 48px;margin:0;}
+  ol.steps>li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:-2px;
+    width:32px;height:32px;border-radius:50%;
+    background:linear-gradient(135deg,var(--cerulean),var(--violet));color:#fff;
+    font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;}
+  ol.steps>li:not(:last-child)::after{content:"";position:absolute;left:15px;top:32px;bottom:6px;
+    width:2px;background:var(--line);}
 
-  /* copy URL field */
-  .copyrow{display:flex; gap:8px; align-items:stretch; margin:12px 0; flex-wrap:wrap;}
-  .urlbox{font-family:var(--mono); font-size:15px; background:#fff; border:1px solid var(--line);
-    border-radius:10px; padding:11px 14px; flex:1; min-width:240px; color:var(--ink);}
-  .copybtn{border:1px solid var(--line); background:#fff; border-radius:10px; padding:0 16px;
-    font-weight:600; cursor:pointer; font-size:15px; color:var(--accent-ink);}
-  .copybtn:hover{background:var(--accent-soft);}
-  .copybtn.done{background:var(--accent); color:#fff; border-color:var(--accent);}
+  /* copy URL */
+  .copyrow{display:flex;gap:8px;align-items:stretch;margin:12px 0;flex-wrap:wrap;}
+  .urlbox{font-family:var(--mono);font-size:15px;background:#fff;border:1px solid var(--line);
+    border-radius:10px;padding:11px 14px;flex:1;min-width:240px;color:var(--ink);}
+  .copybtn{border:1px solid var(--cerulean);background:var(--accent-soft);border-radius:10px;
+    padding:0 18px;font-weight:650;cursor:pointer;font-size:15px;color:var(--accent-ink);}
+  .copybtn:hover{background:#d6f3ff;}
+  .copybtn.done{background:var(--cerulean);color:#03121c;}
 
-  .callout{background:var(--accent-soft); border-radius:var(--radius); padding:18px 20px;
-    margin-top:18px; font-size:16px;}
+  .callout{background:var(--violet-soft);border:1px solid #ead9ff;border-radius:var(--radius);
+    padding:18px 20px;margin-top:20px;font-size:16px;}
+  .codephrase{font-family:var(--mono);background:#eef0f6;padding:2px 8px;border-radius:6px;
+    font-size:.92em;color:var(--accent-ink);}
 
   /* FAQ */
-  details{border-top:1px solid var(--line); padding:16px 0;}
+  details{border-top:1px solid var(--line);padding:16px 0;}
   details:first-of-type{border-top:none;}
-  summary{cursor:pointer; font-weight:650; font-size:18px; list-style:none; display:flex;
-    justify-content:space-between; align-items:center; gap:12px;}
+  summary{cursor:pointer;font-weight:660;font-size:18px;list-style:none;display:flex;
+    justify-content:space-between;align-items:center;gap:12px;}
   summary::-webkit-details-marker{display:none;}
-  summary::after{content:"+"; color:var(--accent-ink); font-size:24px; font-weight:400; line-height:1;}
+  summary::after{content:"+";color:var(--violet);font-size:26px;font-weight:400;line-height:1;}
   details[open] summary::after{content:"\2013";}
-  details p{margin:.7em 0 .2em; color:#3a352e; font-size:16.5px;}
+  details p{margin:.7em 0 .2em;color:#3b3f52;font-size:16.5px;}
 
-  footer{padding:40px 0 60px; border-top:1px solid var(--line); color:var(--muted); font-size:15px;}
+  footer{padding:42px 0 64px;border-top:1px solid var(--line);color:var(--muted);font-size:15px;}
   footer a{color:var(--muted);}
-  .codephrase{font-family:var(--mono); background:#f2ede4; padding:2px 7px; border-radius:6px;
-    font-size:.92em; color:var(--accent-ink);}
 </style>
 </head>
 <body>
-<div class="wrap">
 
   <header class="hero">
-    <span class="eyebrow" id="eyebrow">A free Claude connector</span>
-    <h1 id="pack-name">Jen's Claude Skills</h1>
-    <p class="lede" id="lede">A connector that turns Claude into an assistant that actually knows my work. It learns how I operate from my own tools, then runs the daily stuff: morning briefs, meeting prep, follow-ups, and weekly reviews.</p>
-    <a class="cta" href="#install">Install in Claude</a>
-    <div class="meta-line"><b>2-minute install</b> · <b>15-minute setup</b> · works with the tools you already use</div>
+    <div class="wrap">
+      <span class="eyebrow" id="eyebrow">A free Claude connector</span>
+      <h1 class="hero-title" id="hero-title">Mission control for your meetings</h1>
+      <p class="lede" id="lede"></p>
+      <a class="cta" href="#install">Install in Claude</a>
+      <div class="meta-line"><b>2-minute install</b> · <b>15-minute setup</b> · works with the tools you already use</div>
+    </div>
   </header>
 
-  <section id="phrases">
-    <h2>What you'll say to Claude every day</h2>
-    <p class="section-intro muted">Nothing to memorize. Talk to Claude like you normally would. These phrases kick off the workflows:</p>
-    <div class="phrases" id="phrase-list"><!-- rendered from CONFIG --></div>
-  </section>
+  <div class="wrap">
 
-  <section id="install">
-    <h2>Install the connector</h2>
-    <p class="section-intro muted">A connector is Claude's version of an integration. Connect it once and the skills show up in every conversation — new ones appear automatically as I ship them.</p>
-    <ol class="steps">
-      <li><a href="https://claude.ai/download">Download Claude Desktop</a> if you haven't already.</li>
-      <li>Open <b>Settings</b> (click your name, bottom-left), then <b>Connectors</b>.</li>
-      <li>Click <b>Add custom connector</b>.</li>
-      <li>Name it <b id="conn-name">Jen's Skills</b> and paste this URL:
-        <div class="copyrow">
-          <span class="urlbox" id="conn-url">https://your-skills-url.example.com</span>
-          <button class="copybtn" id="copybtn" type="button">Copy</button>
-        </div>
-      </li>
-      <li>Click <b>Add</b>, toggle it on, and start a new conversation.</li>
-      <li>Optional: open the connector and set <b>Tool permissions</b> to <b>Always allow</b>, so Claude doesn't ask before each skill.</li>
-    </ol>
-    <div class="callout">Can't install the connector? <a href="#" id="github-link">Grab the skills pack on GitHub</a> — it works with any AI tool.</div>
-  </section>
+    <section id="skills">
+      <h2>The skills, and what each one does</h2>
+      <p class="section-intro muted">Once the connector is on, these run from plain language. Nothing to memorize, just say the phrase and Claude takes it from there.</p>
+      <div class="skills" id="skill-list"><!-- rendered from CONFIG --></div>
+    </section>
 
-  <section id="get-started">
-    <h2>Get started</h2>
-    <ol class="steps">
-      <li>Open <a href="https://claude.ai">Claude</a> and create a new project. <b>Cowork</b> is preferred if you have it (top-left, next to Chat). Chat works too.</li>
-      <li>Start a conversation in that project and type: <span class="codephrase">Build my profile</span></li>
-      <li>Setup scans the tools you've connected, then asks a few questions to fill the gaps. About 5 minutes.</li>
-      <li>When it's done, copy the project instructions it generates, open <b>Instructions</b> (top right, pencil icon), and paste them in.</li>
-    </ol>
-    <h3 style="margin-top:26px;">Your first 10 minutes</h3>
-    <p class="muted">Don't stop at the install — run one workflow right now. The daily brief is the best first test. Curious what else is in there? Type <span class="codephrase">help</span> in any conversation to see every skill and its trigger phrase. If something isn't working, disconnect and reconnect the connector, or restart Claude. That fixes most things.</p>
-  </section>
+    <section id="install">
+      <h2>Install the connector</h2>
+      <p class="section-intro muted">A connector is Claude's version of an integration. Add it once and the skills show up in every conversation, with new ones appearing automatically as I ship them.</p>
+      <ol class="steps">
+        <li><a href="https://claude.ai/download">Download Claude Desktop</a> if you haven't already.</li>
+        <li>Open <b>Settings</b> (click your name, bottom-left), then <b>Connectors</b>.</li>
+        <li>Click <b>Add custom connector</b>.</li>
+        <li>Name it <b id="conn-name">Jen's Skills</b> and paste this URL:
+          <div class="copyrow">
+            <span class="urlbox" id="conn-url">https://your-skills-url.example.com</span>
+            <button class="copybtn" id="copybtn" type="button">Copy</button>
+          </div>
+        </li>
+        <li>Click <b>Add</b>, toggle it on, and start a new conversation.</li>
+        <li>Optional: open the connector and set <b>Tool permissions</b> to <b>Always allow</b>, so Claude doesn't ask before each skill.</li>
+      </ol>
+      <div class="callout">Can't install the connector? <a href="#" id="github-link">Grab the skills pack on GitHub</a>, it works with any AI tool.</div>
+    </section>
 
-  <section id="faq">
-    <h2>Common questions</h2>
+    <section id="get-started">
+      <h2>Get started</h2>
+      <ol class="steps">
+        <li>Open <a href="https://claude.ai">Claude</a> and create a new project. <b>Cowork</b> is preferred if you have it (top-left, next to Chat). Chat works too.</li>
+        <li>Start a conversation in that project and type: <span class="codephrase">Build my profile</span></li>
+        <li>Setup scans the tools you've connected, then asks a few questions to fill the gaps. About 5 minutes.</li>
+        <li>When it's done, copy the project instructions it generates, open <b>Instructions</b> (top right, pencil icon), and paste them in.</li>
+      </ol>
+      <h3 style="margin-top:28px;">Your first 10 minutes</h3>
+      <p class="muted">Don't stop at the install, run one workflow right now. The daily brief is the best first test. Curious what else is in there? Type <span class="codephrase">help</span> in any conversation to see every skill and its trigger phrase. If something isn't working, disconnect and reconnect the connector, or restart Claude. That fixes most things.</p>
+    </section>
 
-    <details open>
-      <summary>Is my data safe?</summary>
-      <p>The skills are instructions for Claude, not a pipe to me. Your tools stay connected through Claude's own connectors, and I only see that the skills are being used — not what's inside them. Check with your company that your Claude account is set up so Anthropic doesn't train on your data.</p>
-    </details>
+    <section id="faq">
+      <h2>Common questions</h2>
 
-    <details>
-      <summary>Will it make things up?</summary>
-      <p>It works from what's in the tools you connect. That said, AI can hallucinate or mix things up, so double-check its work. Treat yourself as the human reviewer on anything it drafts — especially before it goes to someone else.</p>
-    </details>
+      <details open>
+        <summary>Is my data safe?</summary>
+        <p>The skills are instructions for Claude, not a pipe to me. Your tools stay connected through Claude's own connectors, and I only see that the skills are being used, not what's inside them. Check with your company that your Claude account is set up so Anthropic doesn't train on your data.</p>
+      </details>
 
-    <details>
-      <summary>Does it work with my tools?</summary>
-      <p>Any tool with a Claude connector. You can check yours in <a href="https://claude.ai/directory">Claude's connector directory</a>. If yours isn't listed, the workflows still run — you'll just paste context in manually.</p>
-    </details>
+      <details>
+        <summary>Will it make things up?</summary>
+        <p>It works from what's in the tools you connect: your calendar, email, CRM, and meeting recordings. AI can still get things mixed up, so treat yourself as the human reviewer on anything it drafts, especially before it goes to someone else.</p>
+      </details>
 
-    <details>
-      <summary>What's the catch?</summary>
-      <p>No catch. It's free, no signup or email gate, and you can remove it anytime. I built this because it makes my own work better, and I figured it might do the same for you.</p>
-    </details>
+      <details>
+        <summary>Does it work with my tools?</summary>
+        <p>Any tool with a Claude connector: your meeting recorder, CRM, email, and calendar. You can check yours in <a href="https://claude.ai/directory">Claude's connector directory</a>. If yours isn't listed, the workflows still run, you'll just paste context in manually.</p>
+      </details>
 
-    <details>
-      <summary>How do I uninstall it?</summary>
-      <p>Settings → Connectors → remove it. That's it. Nothing else to clean up.</p>
-    </details>
-  </section>
+      <details>
+        <summary>What's the catch?</summary>
+        <p>No catch. It's free, no signup or email gate, and you can remove it anytime. I built this because it makes my own work better, and I figured it might do the same for you.</p>
+      </details>
 
-  <footer>
-    Built by <span id="author-name">Jen</span> · Updated <span id="updated">June 2026</span> · <a href="#install">Install</a>
-  </footer>
+      <details>
+        <summary>How do I uninstall it?</summary>
+        <p>Settings, then Connectors, then remove it. That's it. Nothing else to clean up.</p>
+      </details>
+    </section>
 
-</div>
+    <footer>
+      Built by <span id="author-name">Jen</span> · Updated <span id="updated">June 2026</span> · <a href="#install">Install</a>
+    </footer>
+
+  </div>
 
 <script>
 /* ============================================================
@@ -191,60 +219,69 @@
    Everything below drives the page. Change a value, reload.
    ============================================================ */
 const CONFIG = {
-  packName:   "Jen's Claude Skills",
-  connectorName: "Jen's Skills",
-  connectorUrl:  "https://your-skills-url.example.com",   // paste your real connector URL
-  githubUrl:  "https://github.com/your-handle/your-skills-pack",
-  authorName: "Jen",
-  eyebrow:    "A free Claude connector",
-  lede:       "A connector that turns Claude into an assistant that actually knows my work. It learns how I operate from my own tools, then runs the daily stuff: morning briefs, meeting prep, follow-ups, and weekly reviews.",
-  updated:    "June 2026",
+  brandName:    "Jen's Claude Skills",                  // browser tab + footer
+  heroTitle:    "Mission control for your meetings",    // the big headline
+  eyebrow:      "A free Claude connector",
+  lede:         "This is a free connector for Claude: a set of ready-to-run skills that handle the busywork around your meetings. Add it once and Claude can run your <b>morning brief</b>, prep you for calls, draft your follow-ups, and review your week, all in plain language. Built by me, free to use.",
+  connectorName:"Jen's Skills",
+  connectorUrl: "https://your-skills-url.example.com",  // paste your real connector URL
+  githubUrl:    "https://github.com/your-handle/your-skills-pack",
+  authorName:   "Jen",
+  updated:      "June 2026",
 
-  // Each card = one thing you say to Claude. Add or remove freely.
-  phrases: [
+  // Each skill = trigger phrase + a title + what it actually does.
+  skills: [
     { say: "Run my daily brief",
-      desc: "A pulse on today's calls, messages, and what needs me." },
+      title: "Daily brief",
+      what: "Pulls today's calendar, recent messages, and open follow-ups into one short read. You start the day knowing what's on, what slipped, and who's waiting on you, before anyone has to ask." },
     { say: "Prep me for my meeting with [name]",
-      desc: "A focused brief on one upcoming meeting, with the context that matters." },
+      title: "Meeting prep",
+      what: "Builds a focused brief on one upcoming meeting: who you're meeting, what happened last time, the open items, and the few things worth raising. You walk in ready instead of scrambling in the first five minutes." },
     { say: "Run my post-call",
-      desc: "A follow-up email, a note for the record, and any resources to send." },
-    { say: "Nudge [name/company]",
-      desc: "Draft a play to restart a conversation that's gone quiet." },
+      title: "Post-call follow-up",
+      what: "Turns the conversation you just captured into a follow-up email, a clean note for the record, and any resources to send. Drafts only, so you review before anything leaves your hands." },
+    { say: "Nudge [name or company]",
+      title: "Re-engage a quiet thread",
+      what: "Drafts a short, natural message to restart a conversation that's gone quiet, using the real history so it reads like you wrote it, not a template." },
     { say: "Run my weekly review",
-      desc: "A full scan of the week: what's closing, what's at risk, what slipped." },
+      title: "Weekly review",
+      what: "Scans the week across your tools: what's closing, what's at risk, what moved, and what didn't. A five-minute read that replaces an hour of digging through tabs." },
   ],
 };
 
 /* ---- render (no need to edit below) ---- */
 (function render(c){
-  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-  document.title = c.packName;
-  set("pack-name", c.packName);
-  set("eyebrow", c.eyebrow);
-  set("lede", c.lede);
-  set("conn-name", c.connectorName);
-  set("conn-url", c.connectorUrl);
-  set("author-name", c.authorName);
-  set("updated", c.updated);
-  const gh = document.getElementById("github-link");
-  if (gh) gh.href = c.githubUrl;
+  const setText = (id,v)=>{const el=document.getElementById(id); if(el) el.textContent=v;};
+  const setHTML = (id,v)=>{const el=document.getElementById(id); if(el) el.innerHTML=v;};
+  document.title = "Mission Control · " + c.brandName;
+  setText("hero-title", c.heroTitle);
+  setText("eyebrow", c.eyebrow);
+  setHTML("lede", c.lede);
+  setText("conn-name", c.connectorName);
+  setText("conn-url", c.connectorUrl);
+  setText("author-name", c.authorName);
+  setText("updated", c.updated);
+  const gh=document.getElementById("github-link"); if(gh) gh.href=c.githubUrl;
 
-  const list = document.getElementById("phrase-list");
-  list.innerHTML = c.phrases.map(p =>
-    `<div class="phrase"><span class="say">${p.say}</span><p>${p.desc}</p></div>`
+  document.getElementById("skill-list").innerHTML = c.skills.map(s =>
+    `<div class="skill">
+       <span class="say">${s.say}</span>
+       <h3>${s.title}</h3>
+       <p>${s.what}</p>
+     </div>`
   ).join("");
 
-  const btn = document.getElementById("copybtn");
-  btn.addEventListener("click", async () => {
-    try { await navigator.clipboard.writeText(c.connectorUrl); }
+  const btn=document.getElementById("copybtn");
+  btn.addEventListener("click", async ()=>{
+    try{ await navigator.clipboard.writeText(c.connectorUrl); }
     catch(e){
-      const r = document.createRange(); r.selectNode(document.getElementById("conn-url"));
-      window.getSelection().removeAllRanges(); window.getSelection().addRange(r);
+      const r=document.createRange(); r.selectNode(document.getElementById("conn-url"));
+      const sel=window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
       try{ document.execCommand("copy"); }catch(_){}
-      window.getSelection().removeAllRanges();
+      sel.removeAllRanges();
     }
-    btn.textContent = "Copied"; btn.classList.add("done");
-    setTimeout(() => { btn.textContent = "Copy"; btn.classList.remove("done"); }, 1600);
+    btn.textContent="Copied"; btn.classList.add("done");
+    setTimeout(()=>{ btn.textContent="Copy"; btn.classList.remove("done"); }, 1600);
   });
 })(CONFIG);
 </script>
